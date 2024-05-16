@@ -2,15 +2,16 @@
 // En App.vue
 import { ref } from "vue";
 import axios from "axios";
-import { useRouter } from "vue-router";
+import {useRouter} from 'vue-router';
+import { reactive } from 'vue';
 
 export default {
   setup() {
     const router = useRouter();
-
+    
     const login = () => {
       axios
-        .get("http://localhost:3000/api/user/loging/Juan/QWERTY")
+        .get("http://localhost:3000/api/user/loging/pepe/12345678")
         .then((response) => {
           if (response.data == false) {
             console.log("Error");
