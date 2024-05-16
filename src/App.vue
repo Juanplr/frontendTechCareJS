@@ -1,3 +1,24 @@
+<script>
+  import axios from 'axios';
+  
+  export default {
+	methods: {
+	  login() {
+		axios.get("http://localhost:3000/api/user/loging/pedro/12345678", this.form)
+		  .then(response => {
+			console.log(response);
+		  })
+		  .catch(error => {
+			console.error(error);
+		  });
+	  },
+	  prueba(){
+		console.log("Hola");
+	  }
+	}
+  }
+  </script>
+
 <template>
 	<div class="container">
 	  <div class="screen">
@@ -29,25 +50,4 @@
 	</div>
 	<a href="/src/Home.js">Prueba</a>
   </template>
-  
-  <script>
-  import axios from 'axios';
-  
-  export default {
-	methods: {
-	  login() {
-		axios.get("http://localhost:3000/api/user/loging/Juan/wqdhu", this.form)
-		  .then(response => {
-			console.log(response);
-		  })
-		  .catch(error => {
-			console.error(error);
-		  });
-	  },
-	  prueba(){
-		console.log("Hola");
-	  }
-	}
-  }
-  </script>
   
