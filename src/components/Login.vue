@@ -8,10 +8,18 @@ import { reactive } from 'vue';
 export default {
   setup() {
     const router = useRouter();
+
+    const formData = reactive({
+      username: '',
+      password: ''
+    });
     
+    //console.log('Username:', formData.username);
+    //console.log('Password:', formData.password);
     const login = () => {
       axios
-        .get("http://localhost:3000/api/user/loging/pepe/12345678")
+        //.get("http://localhost:3000/api/user/loging/pepe/12345678")
+        .get(`http://localhost:3000/api/user/loging/${formData.username}/${formData.password}`)
         .then((response) => {
           if (response.data == false) {
             console.log("Error");
@@ -25,11 +33,7 @@ export default {
         });
     };
 
-    const prueba = () => {
-      console.log("Hola");
-    };
-
-    return { login, prueba };
+    return { formData, login };
   },
 };
 </script>
@@ -44,7 +48,8 @@ export default {
             <input
               type="text"
               class="login__input"
-              placeholder="User name / Email"
+              placeholder="Username"
+              v-model="formData.username"
             />
           </div>
           <div class="login__field">
@@ -53,6 +58,7 @@ export default {
               type="password"
               class="login__input"
               placeholder="Password"
+              v-model="formData.password"
             />
           </div>
           <button
