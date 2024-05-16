@@ -1,14 +1,17 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
 
-* {
+.container{
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;	
 	font-family: Raleway, sans-serif;
 }
 
-body {
+.container {
 	background: linear-gradient(90deg, #010326, #9C8BCD);		
+}
+body{
+	margin: 0%;
 }
 
 .container {
