@@ -1,21 +1,12 @@
 <template>
   <div>
     <div>
-      <input type="text" list="browsers" />
-      <datalist id="browsers">
-        <option value="Google"></option>
-        <option value="IE9"></option>
-      </datalist>
+      <button></button>
       <input type="text" />
-      <input type="text" />
-      <input type="date" />
-      <input type="text" />
+      <button></button>
     </div>
     <div>
-      <input type="text" />
-      <input type="text" />
-      <input type="text" />
-      <input type="button" />Generar Orden<input type="text" />
+      <img src="" alt="" />
     </div>
   </div>
 </template>
