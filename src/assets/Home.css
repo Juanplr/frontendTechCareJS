@@ -1,0 +1,61 @@
+/* Home.css */
+
+.fund {
+    background-color: #ccc;
+
+}
+
+.header {
+    background-color: #010326;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    /* Espacio entre los elementos */
+    padding: 15px;
+    /* Opcional: Espacio alrededor del contenedor */
+    height: 65px;
+}
+
+.id {
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+    height: 35px;
+    width: 255px;
+    border: none;
+    border-radius: 1%;
+}
+
+
+.search {
+
+    float: right;
+    background-color: #9C8BCD;
+    font-family: 'inter', sans-serif; /* Agrega comillas al nombre de la fuente */
+    color: #fff; /* Usa código hexadecimal para el color de texto */
+    font-size: 15px;
+    width: 155px;
+    border-radius: 8px; /* Ajusta el radio del borde para hacerlo semicircular */
+    border: none; /* Elimina el borde */
+    padding: 2px;
+    cursor: pointer;
+}
+
+
+.image_logo {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente el contenido */
+    align-items: center; /* Centra verticalmente el contenido */
+    overflow: hidden;
+    position: relative;
+    width: 99vw;
+    height: 100vh;
+    opacity: 0.5;
+}
+
+.image_logo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
