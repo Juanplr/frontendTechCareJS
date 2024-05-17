@@ -1,10 +1,12 @@
 import {createRouter, createWebHistory} from 'vue-router';
 import Login from '../components/Login.vue';
 import Home from '../components/Home.vue';
+import FormularioOrden from '../components/FormularioOrden.vue';
 
 const routes = [
     {path: '/', component: Login},
-    {path: '/home', component: Home}
+    {path: '/home', component: Home},
+    {path: '/formularioOrden', component: FormularioOrden}
 ];
 
 const router = createRouter({
