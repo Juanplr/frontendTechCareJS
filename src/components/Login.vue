@@ -8,18 +8,19 @@ import { reactive } from 'vue';
 export default {
   setup() {
     const router = useRouter();
-
+    const URL = "http://localhost:3000/api/";
     const formData = reactive({
       username: '',
       password: ''
     });
     
-    //console.log('Username:', formData.username);
-    //console.log('Password:', formData.password);
+    
     const login = () => {
       axios
-        //.get("http://localhost:3000/api/user/loging/pepe/12345678")
-        .get(`http://localhost:3000/api/user/loging/${formData.username}/${formData.password}`)
+        .post(`${URL}user/loging`,
+          "username=" + formData.username,
+          "&password=" + formData.password
+        )
         .then((response) => {
           if (response.data == false) {
             console.log("Error");
@@ -49,8 +50,10 @@ export default {
               type="text"
               class="login__input"
               placeholder="Username"
-              v-model="formData.username"
-            />
+              v-model="formData.username"/>
+          <div class="login__label">
+            <label>Nombre de usuario o contraseña incorrectos</label>
+          </div>
           </div>
           <div class="login__field">
             <i class="login__icon fas fa-lock"></i>
@@ -60,13 +63,16 @@ export default {
               placeholder="Password"
               v-model="formData.password"
             />
+            <div class="login__label">
+            <label>Nombre de usuario o contraseña incorrectos</label>
+          </div>
           </div>
           <button
             v-on:click="login()"
             type="button"
             class="button login__submit"
           >
-            <span class="button__text">Log In Now</span>
+            <span class="button__text">Inicio de sesión</span> 
             <i class="button__icon fas fa-chevron-right"></i>
           </button>
         </form>
@@ -84,5 +90,5 @@ export default {
 </template>
 
 <style>
-@import "@/assets/app.css";
+@import "@/assets/LoginStyle.css";
 </style>

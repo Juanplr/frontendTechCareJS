@@ -1,0 +1,105 @@
+
+#divGeneral {
+  display: grid;
+  grid-template-columns: max-content max-content; 
+  gap: 10%; /* Espacio entre las columnas */
+  justify-content: center; /* Centramos las columnas */
+  margin-top: 60px;
+  
+}
+#headerFormOrden{
+  padding: 2%;
+  text-align: center;
+  background-color: rgb(5, 19, 40);
+  color: #fff;
+  font-weight: bold;
+  font-size:x-large;
+}
+
+#cb_tipo_dispositivo{
+  width: auto;
+}
+
+#divColumna1{
+  width: 90%;
+  display: grid;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  row-gap: 30px;
+}
+#divColumna2{
+  width: 200px;
+  height: max-content;
+  display: grid;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  row-gap: 30px;
+}
+#selectTipo{
+  padding: 5%;
+  width: 110px;
+}
+input[type="date"] {
+  display: block; /* Asegura que se comporte como un bloque para alinearse correctamente */
+  width: 80%; /* Asegura que ocupe todo el ancho disponible */
+  padding: 9%;
+  
+}
+
+input[type="text"]{
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+input[type="text"]:focus{
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+
+.custom-toggle {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 50px;
+  height: 25px;
+  background-color: #ccc;
+  border-radius: 15px;
+  position: relative;
+  outline: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.custom-toggle::before {
+  content: "✗";
+  color: white;
+  font-weight: bold;
+  display: block;
+  width: 25px;
+  height: 25px;
+  background-color: #ff4d4d;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.custom-toggle:checked {
+  background-color: #4caf50;
+}
+
+.custom-toggle:checked::before {
+  content: "✓";
+  background-color: #4caf50;
+  transform: translateX(25px);
+}
+

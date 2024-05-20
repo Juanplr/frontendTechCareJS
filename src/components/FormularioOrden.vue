@@ -1,83 +1,127 @@
+<script>
+import { reactive } from 'vue';
+import axios from "axios";
+export default {
+  setup() {
+    const url = "http://localhost:3000/api/";
+    
+    const formData = reactive({
+      numero_de_serie: '',
+      marca: '',
+      modelo: '',
+      estado_fisico: '',
+      presupuesto: '',
+      nombre_cliente: '',
+      monto_total: '',
+      anticipo: '',
+      tipo_de_dispositivo: '',
+      cargador: false
+    });
+
+    const generar_orden = () => {
+      const parametros = 
+      {
+        numero_de_serie: formData.numero_de_serie,
+        marca: formData.marca,
+        modelo: formData.modelo,
+        estado_fisico: formData.estado_fisico,
+        presupuesto: formData.presupuesto,
+        nombre_cliente: formData.nombre_cliente,
+        monto_total: formData.monto_total,
+        anticipo: formData.anticipo,
+        tipo_de_dispositivo: formData.tipo_de_dispositivo,
+        cargador: formData.cargador
+      }
+
+      const nuevoEquipo ={
+          "numero_de_serie": parametros.numero_de_serie,
+          "marca": parametros.marca,
+          "modelo": parametros.modelo,
+          "tipo_de_dispositivo": parametros.tipo_de_dispositivo,
+          "estado_fisico": parametros.estado_fisico,
+          "cargador": parametros.cargador
+      }
+
+      const nuevaordendeservicio ={
+
+      }
+
+      axios.post(`${url}equipo`, nuevoEquipo
+      )
+      .then((response)=>{
+        if(responnse != null){
+          parametros.numero_de_serie=responnse.data;
+          axios.post(`${url}orden_servicio/nuevaordendeservicio`, nuevoEquipo
+      )
+      .then((response)=>{
+        
+      })
+      .catch((error)=>{
+        console.error(error);
+      });
+        }
+      })
+      .catch((error)=>{
+        console.error(error);
+      });
+
+
+      console.log(parametros);
+    };
+
+    return { formData, generar_orden };
+  },
+};
+
+</script>
+
 <template>
-<header id="headerFormOrden">Llene los datos para generar una nueva orden de servicio</header>
+  <header id="headerFormOrden">
+    Llene los datos para generar una nueva orden de servicio
+  </header>
   <div id="divGeneral">
     <div id="divColumna1">
-      <input id="selectTipo" list="browsers" />
-      <datalist id="browsers">
-        <option value="Google"></option>
-        <option value="IE9"></option>
-      </datalist>
-      <input type="text" placeholder="Numero de serie"/>
-      <input type="text" placeholder="Marca"/>
-      <input type="text" placeholder="Modelo" />
-      
-      <input type="date" />
+      <div class="cb_tipo_dispositivo">
+        <form action="#">
+          <label for="lang">Tipo de equipo</label>
+          <select name="tipos_de_equipo" id="lang" v-model="formData.tipo_de_dispositivo">
+            <option value="escritorio">Escritorio</option>
+            <option value="laptop">Laptop</option>
+            <option value="consola">Consola</option>
+          </select>
+        </form>
+      </div>
+      <input type="text" placeholder="Numero de serie" v-model="formData.numero_de_serie"/>
+      <input type="text" placeholder="Marca" v-model="formData.marca"/>
+      <input type="text" placeholder="Modelo" v-model="formData.modelo"/>
+      <input type="checkbox" role="switch" id="customToggle" class="custom-toggle" v-model="formData.cargador"/>
+
+      <label>Estado físico</label>
+      <textarea
+        name="estado_fisico"
+        id="ta_estado_fisico"
+        cols="30"
+        rows="5"
+        v-model="formData.estado_fisico"
+      ></textarea>
       <label>Presupuesto</label>
-      <textarea name="presupuesto" id="textArea" cols="30" rows="10"></textarea>
+      <textarea
+        name="presupuesto"
+        id="ta_presupuesto"
+        cols="30"
+        rows="5"
+        v-model="formData.presupuesto"
+      ></textarea>
     </div>
     <div id="divColumna2">
-      <input type="text" placeholder="Nombre del cliente"/>
-      <input type="text" placeholder="Monto total del servicio"/>
-      <input type="text" placeholder="Anticipo"/>
-      <button>Generar orden</button>
+      <input type="text" placeholder="Nombre del cliente" v-model="formData.nombre_cliente"/>
+      <input type="text" placeholder="Monto total del servicio" v-model="formData.monto_total"/>
+      <input type="text" placeholder="Anticipo" v-model="formData.anticipo"/>
+      <button type="button" v-on:click="generar_orden">Generar orden</button>
     </div>
   </div>
 </template>
+
 <style>
-#divGeneral {
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* Dos columnas de ancho igual */
-   /* Espacio entre las columnas */
-  justify-items: center;
-  margin-top: 60px;
-  height: 8cm;
-}
-#headerFormOrden{
-  padding: 2%;
-  text-align: center;
-  background-color: rgb(5, 19, 40);
-  color: #fff;
-  font-weight: bold;
-  font-size:x-large;
-}
-#divColumna1{
-  width: 30%;
-  display: grid;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  align-items: flex-start;
-  row-gap: 30px;
-}
-#divColumna2{
-  width: 20%;
-  display: grid;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  align-items: center;
-  row-gap: 30px;
-}
-#selectTipo{
-  padding: 5%;
-  width: 110px;
-}
-input[type="date"] {
-  display: block; /* Asegura que se comporte como un bloque para alinearse correctamente */
-  width: 80%; /* Asegura que ocupe todo el ancho disponible */
-  padding: 9%;
-  
-}
-
-input[type="text"]{
-  border-top: none;
-  border-left: none;
-  border-right: none;
-}
-input[type="text"]:focus{
-  border-top: none;
-  border-left: none;
-  border-right: none;
-}
-
+@import "../assets/FormularioOrden.css";
 </style>
