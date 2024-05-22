@@ -19,6 +19,7 @@
 
 .id {
     font-size: 20px;
+    font-family: 'Raleway', sans-serif;
     font-weight: bold;
     color: black;
     height: 35px;
@@ -32,7 +33,7 @@
 
     float: right;
     background-color: #9C8BCD;
-    font-family: 'inter', sans-serif; /* Agrega comillas al nombre de la fuente */
+    font-family: 'Raleway', sans-serif; /* Agrega comillas al nombre de la fuente */
     color: #fff; /* Usa código hexadecimal para el color de texto */
     font-size: 15px;
     width: 155px;
@@ -43,19 +44,46 @@
 }
 
 
-.image_logo {
+.container_image {
     display: flex;
-    justify-content: center; /* Centra horizontalmente el contenido */
-    align-items: center; /* Centra verticalmente el contenido */
+    justify-content: center;
+    align-items: center;
     overflow: hidden;
     position: relative;
-    width: 99vw;
-    height: 100vh;
-    opacity: 0.5;
-}
+    width: 100vw;
+    height: 80vh;
+    opacity: 0.2;
+  }
+  
+  .image_logo {
+    max-width: 125%;
+    max-height: 125%;
+    object-fit: contain;
+  }
 
-.image_logo img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: cover;
-}
+
+.chat_container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    animation: bounceBubble 0.5s infinite alternate;
+  }
+  
+  @keyframes bounceBubble {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-10px);
+    }
+  }
+  
+  .chat_bubble {
+    background-color: #DCF8C6;
+    color: black;
+    padding: 10px;
+    border-radius: 20px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    max-width: 250px;
+    text-align: center;
+  }
