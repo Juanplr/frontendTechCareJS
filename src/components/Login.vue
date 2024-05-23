@@ -10,16 +10,19 @@ export default {
     const router = useRouter();
     const URL = "http://localhost:3000/api/";
     const formData = reactive({
-      username: '',
-      password: ''
+      nombre: '',
+      contrasena: ''
     });
     
     
     const login = () => {
+      const sesion = {
+        "nombre": formData.nombre,
+        "contrasena": formData.contrasena
+      }
+
       axios
-        .post(`${URL}user/loging`,
-          "username=" + formData.username,
-          "&password=" + formData.password
+        .post(`${URL}user/loging`, sesion 
         )
         .then((response) => {
           if (response.data == false) {
@@ -50,7 +53,7 @@ export default {
               type="text"
               class="login__input"
               placeholder="Username"
-              v-model="formData.username"/>
+              v-model="formData.nombre"/>
           <div class="login__label">
             <label>Nombre de usuario o contraseña incorrectos</label>
           </div>
@@ -61,7 +64,7 @@ export default {
               type="password"
               class="login__input"
               placeholder="Password"
-              v-model="formData.password"
+              v-model="formData.contrasena"
             />
             <div class="login__label">
             <label>Nombre de usuario o contraseña incorrectos</label>

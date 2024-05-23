@@ -1,10 +1,12 @@
 <script>
 import { reactive } from 'vue';
 import axios from "axios";
+import { getFechaActual } from "@/Funtionsjs/DateFormat";
 export default {
   setup() {
     const url = "http://localhost:3000/api/";
-    
+
+
     const formData = reactive({
       numero_de_serie: '',
       marca: '',
@@ -19,54 +21,49 @@ export default {
     });
 
     const generar_orden = () => {
-      const parametros = 
-      {
-        numero_de_serie: formData.numero_de_serie,
-        marca: formData.marca,
-        modelo: formData.modelo,
-        estado_fisico: formData.estado_fisico,
-        presupuesto: formData.presupuesto,
-        nombre_cliente: formData.nombre_cliente,
-        monto_total: formData.monto_total,
-        anticipo: formData.anticipo,
-        tipo_de_dispositivo: formData.tipo_de_dispositivo,
-        cargador: formData.cargador
-      }
-
       const nuevoEquipo ={
-          "numero_de_serie": parametros.numero_de_serie,
-          "marca": parametros.marca,
-          "modelo": parametros.modelo,
-          "tipo_de_dispositivo": parametros.tipo_de_dispositivo,
-          "estado_fisico": parametros.estado_fisico,
-          "cargador": parametros.cargador
+          "numero_de_serie": formData.numero_de_serie,
+          "marca": formData.marca,
+          "modelo": formData.modelo,
+          "tipo_de_dispositivo": formData.tipo_de_dispositivo,
+          "estado_fisico": formData.estado_fisico,
+          "cargador": formData.cargador
       }
 
       const nuevaordendeservicio ={
-
+          "fecha_de_ingreso": '',
+          "presupuesto": formData.presupuesto,
+          "monto_total": Number(formData.monto_total),
+          "anticipo": Number(formData.anticipo),
+          "nombre_Cliente": formData.nombre_cliente,
+          "id_equipo": ''
       }
 
       axios.post(`${url}equipo`, nuevoEquipo
       )
       .then((response)=>{
-        if(responnse != null){
-          parametros.numero_de_serie=responnse.data;
-          axios.post(`${url}orden_servicio/nuevaordendeservicio`, nuevoEquipo
+        if(response.data != null){
+          nuevaordendeservicio.id_equipo=response.data;
+          nuevaordendeservicio.fecha_de_ingreso= getFechaActual();
+          axios.post(`${url}orden_servicio/nuevaordendeservicio`, nuevaordendeservicio
       )
       .then((response)=>{
-        
+        console.log(response.data);
       })
       .catch((error)=>{
         console.error(error);
       });
         }
+
+        console.log(response.data);
+        
       })
       .catch((error)=>{
         console.error(error);
       });
 
 
-      console.log(parametros);
+      console.log(nuevoEquipo);
     };
 
     return { formData, generar_orden };
@@ -94,6 +91,7 @@ export default {
       <input type="text" placeholder="Numero de serie" v-model="formData.numero_de_serie"/>
       <input type="text" placeholder="Marca" v-model="formData.marca"/>
       <input type="text" placeholder="Modelo" v-model="formData.modelo"/>
+      <label>¿Cuenta con cargador/eliminador este equipo?</label>
       <input type="checkbox" role="switch" id="customToggle" class="custom-toggle" v-model="formData.cargador"/>
 
       <label>Estado físico</label>
@@ -112,12 +110,10 @@ export default {
         rows="5"
         v-model="formData.presupuesto"
       ></textarea>
-    </div>
-    <div id="divColumna2">
       <input type="text" placeholder="Nombre del cliente" v-model="formData.nombre_cliente"/>
       <input type="text" placeholder="Monto total del servicio" v-model="formData.monto_total"/>
       <input type="text" placeholder="Anticipo" v-model="formData.anticipo"/>
-      <button type="button" v-on:click="generar_orden">Generar orden</button>
+      <button class="btn_generar_orden" type="button" v-on:click="generar_orden">Generar orden</button>
     </div>
   </div>
 </template>

@@ -1,9 +1,25 @@
+<script>
+import {useRouter} from 'vue-router';
+
+export default{
+  setup(){
+    const router = useRouter();
+
+    const go_to_Formulario_orden = () =>{
+      router.push("/formularioOrden");
+    };
+
+    return {go_to_Formulario_orden};
+  },
+};
+</script>
+
 <template>
   <div>
     <div class="header">
       <button class="search">Buscar Orden de Servicio</button>
       <input class="id" type="text" />
-      <button class="search">Nueva Orden de Servicio</button>
+      <button type="button" class="search" v-on:click="go_to_Formulario_orden()">Nueva Orden de Servicio</button>
     </div>
     <div class="container_image">
       <img class="image_logo" src="/Techcare_Claro.jpeg"/>

@@ -1,12 +1,16 @@
 
 #divGeneral {
   display: grid;
-  grid-template-columns: max-content max-content; 
+  grid-template-columns: 1fr; 
   gap: 10%; /* Espacio entre las columnas */
   justify-content: center; /* Centramos las columnas */
   margin-top: 60px;
-  
+  width: 40vw;
+  margin-left: auto;
+  margin-right: auto;
 }
+
+
 #headerFormOrden{
   padding: 2%;
   text-align: center;
@@ -20,34 +24,83 @@
   width: auto;
 }
 
-#divColumna1{
-  width: 90%;
-  display: grid;
+textarea {
+  max-width: 100%; /* Limita el ancho máximo */
+  max-height: 100%; /* Limita el alto máximo */
+  resize: none; /* Deshabilita el redimensionamiento */
+}
+
+.cb_tipo_dispositivo {
+  margin-bottom: 20px;
+}
+
+.cb_tipo_dispositivo form {
+  display: flex;
   flex-direction: column;
-  flex-wrap: nowrap;
-  justify-content: space-between;
   align-items: flex-start;
-  row-gap: 30px;
+  width: 100%;
+  
 }
-#divColumna2{
-  width: 200px;
-  height: max-content;
+
+.cb_tipo_dispositivo label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.cb_tipo_dispositivo select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-bottom: 2px solid #000;
+  background-color: #f0f0f0;
+  color: #333;
+  transition: all 0.3s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cb_tipo_dispositivo select:focus {
+  outline: none;
+  border-bottom: 2px solid #4caf50;
+  background-color: #fff;
+}
+
+button {
+  width: 100%; /* Asegura que el botón use todo el ancho del contenedor */
+}
+
+#divColumna1{
   display: grid;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  align-items: center;
+  width: 100%; 
   row-gap: 30px;
+  
 }
+
+.btn_generar_orden{
+  background: #e2faf4;
+	font-size: 14px;
+	margin-top: 30px;
+	padding: 16px 20px;
+	border-radius: 20px;
+	border: 1px solid #7572af;
+	text-transform: uppercase;
+	font-weight: 700;	
+	width: 100%;
+	color: #4C489D;
+	box-shadow: 0px 2px 2px #5C5696;
+	cursor: pointer;
+	transition: .2s;
+}
+
 #selectTipo{
   padding: 5%;
   width: 110px;
 }
+
 input[type="date"] {
   display: block; /* Asegura que se comporte como un bloque para alinearse correctamente */
   width: 80%; /* Asegura que ocupe todo el ancho disponible */
   padding: 9%;
-  
 }
 
 input[type="text"]{
