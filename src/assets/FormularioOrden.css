@@ -156,3 +156,54 @@ input[type="text"]:focus{
   transform: translateX(25px);
 }
 
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+  display: block;
+}
+
+.notification {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 0, 0, 0.8);
+  color: white;
+  padding: 20px 40px;
+  border-radius: 10px;
+  z-index: 1000;
+  text-align: center;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.notification i {
+  font-size: 24px;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s;
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translate(-50%, -50%);
+  }
+  25% {
+    transform: translate(-48%, -50%);
+  }
+  50% {
+    transform: translate(-52%, -50%);
+  }
+  75% {
+    transform: translate(-48%, -50%);
+  }
+}
