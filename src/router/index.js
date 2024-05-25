@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Login from '../components/Login.vue';
 import Home from '../components/Home.vue';
 import FormularioOrden from '../components/FormularioOrden.vue';
-import CierreDeOrden from '@/components/CierreDeOrden.vue';
+import CierreDeOrden from '../components/CierreDeOrden.vue';
 
 
 const routes = [
