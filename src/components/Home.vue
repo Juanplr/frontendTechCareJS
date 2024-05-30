@@ -59,6 +59,10 @@ export default {
     onMounted(() => {
       get_session_time(sessionTimeout, router);
     })
+    
+    const toggleChat = () => {
+      isChatVisible.value = !isChatVisible.value;
+    };
 
     return { go_to_Formulario_orden, go_to_cierre_orden, formData, id_orden_de_servicio_find, peticion_orden_existe,  toggleChat, isChatVisible };
   }

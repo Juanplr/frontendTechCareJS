@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!--<input
+    <input
       v-model="username"
       class="txt-username"
       type="text"
@@ -14,8 +14,8 @@
     </div>
 
     <form @submit.prevent="handleSubmit" class="form">
-      <span class="title">Chat-io</span>
-      <p class="description">Type your message.</p>
+      <span class="title">Chat en Tiempo real</span>
+      <p class="description">Escribe tu mensaje.</p>
       <div class="div-type-chat">
         <input
           v-model="message"
@@ -25,11 +25,9 @@
           id="chat-message"
           class="input-style"
         />
-        <button type="submit">Send</button>
+        <button type="submit">Enviar</button>
       </div>
-    </form>-->
-    <div>Hola</div>
-    <div>Esto es un chat</div>
+    </form>
   </div>
 </template>
 
@@ -42,10 +40,10 @@ const socket = io("http://localhost:3000/");
 export default {
   name: 'Chat',
   setup() {
-    /*const message = ref("");
+    const message = ref("");
     const username = ref("");
     const listMessages = ref([
-      { body: "Welcome to the chat room", user: username },
+      { body: "Bienvenido al Chat", user: username },
     ]);
 
 
@@ -82,18 +80,15 @@ export default {
     return {
       message,
       username,
-      showPicker,
       listMessages,
       handleSubmit,
-      onEmojiClick,
-      toggleEmojiPicker,
-    };*/
+    };
   },
 };
 </script>
 
 <style scoped>
-/*.txt-username {
+.txt-username {
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
@@ -136,5 +131,5 @@ export default {
   border: 1px solid #ccc;
   border-radius: 4px;
   margin-right: 10px;
-}*/
+}
 </style>
