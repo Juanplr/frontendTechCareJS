@@ -1,11 +1,14 @@
 <script>
-import { getFechaActual } from "@/Funtionsjs/DateFormat";
+import { getFechaActual } from "@/Funtionsjs/funtions";
 import axios from "axios";
-import { reactive, ref } from 'vue';
+import { reactive, ref, onMounted} from 'vue';
+import {useRouter} from 'vue-router';
+import {url} from "@/const/constantes";
+import {sessionTimeout} from "@/const/constantes";
+import {get_session_time} from "@/Funtionsjs/funtions";
 
 export default {
   setup() {
-    const url = "http://localhost:3000/api/";
 
     const formData = reactive({
       numero_de_serie: '',
@@ -22,6 +25,7 @@ export default {
 
     const errors = reactive({});
     const showNotification = ref(false);
+    const router = useRouter();
 
     const validarFormulario = () => {
       let esValido = true;
@@ -101,6 +105,7 @@ export default {
         "monto_total": Number(formData.monto_total),
         "anticipo": Number(formData.anticipo),
         "nombre_Cliente": formData.nombre_cliente,
+        "estado": 'activa',
         "id_equipo": ''
       };
 
@@ -111,7 +116,11 @@ export default {
             nuevaordendeservicio.fecha_de_ingreso = getFechaActual();
             axios.post(`${url}orden_servicio/nuevaordendeservicio`, nuevaordendeservicio)
               .then((response) => {
-                console.log(response.data);
+                if (response.status !== 201) {
+                  console.error(response.data);
+                }else{
+                  router.push("/home");
+                }
               })
               .catch((error) => {
                 console.error(error);
@@ -125,6 +134,10 @@ export default {
 
       console.log(nuevoEquipo);
     };
+
+    onMounted(() => {
+      get_session_time(sessionTimeout, router);
+    })
 
     return { formData, errors, showNotification, generar_orden };
   },

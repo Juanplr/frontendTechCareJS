@@ -9,7 +9,7 @@ const routes = [
     { path: '/', component: Login },
     { path: '/home', component: Home },
     { path: '/formularioOrden', component: FormularioOrden },
-    { path: '/cierreOrden', component: CierreDeOrden }
+    { path: '/cierreOrden/:id', component: CierreDeOrden, props: true }
 ];
 
 const router = createRouter({

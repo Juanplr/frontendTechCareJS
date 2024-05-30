@@ -1,32 +1,56 @@
 <script>
-import { reactive, ref } from 'vue';
+import { reactive, ref} from 'vue';
+import {useRouter } from 'vue-router';
+import {defineComponent, toRefs, onMounted} from 'vue';
+import axios from "axios";
+import {get_session_time} from "@/Funtionsjs/funtions.js";
+import {sessionTimeout} from "@/const/constantes.js";
+export default defineComponent({
 
-export default {
-  setup() {
+  name: 'CierreDeOrden',
+  props: {
+    id: {
+      type: Number,
+      required: true
+    }
+  },
+   setup(props) {
+    const { id } = toRefs(props);
+    
     const formData = reactive({
-      nombreCliente: '',
-      servicioBrindado: '',
+      nombre_Cliente: '',
+      presupuesto: '',
       anticipo: '',
       restante: '',
-      acciones: '',
+      acciones_realizadas: '',
       recomendaciones: '',
-      conclusiones: ''
+      observaciones: ''
     });
 
+    const form_orden = reactive({
+      id_orden_servicio: '',
+      acciones_realizadas: '',
+      recomendaciones: '',
+      observaciones:  '',
+      estado: 'finalizada'
+    });
+
+    const router = useRouter();
+    const numeroOrden = ref(null);
     const errors = reactive({});
     const showNotification = ref(false);
 
     const validarFormulario = () => {
       let esValido = true;
-      errors.nombreCliente = '';
-      errors.servicioBrindado = '';
+      errors.nombre_Cliente = '';
+      errors.presupuesto = '';
       errors.anticipo = '';
       errors.restante = '';
-      errors.acciones = '';
+      errors.acciones_realizadas = '';
       errors.recomendaciones = '';
-      errors.conclusiones = '';
+      errors.observaciones = '';
 
-      if (!formData.nombreCliente) {
+     /* if (!formData.nombreCliente) {
         errors.nombreCliente = 'El nombre del cliente es obligatorio.';
         esValido = false;
       }
@@ -44,10 +68,10 @@ export default {
       if (!formData.restante || isNaN(formData.restante)) {
         errors.restante = 'El restante es obligatorio y debe ser un número.';
         esValido = false;
-      }
+      }*/
 
-      if (!formData.acciones) {
-        errors.acciones = 'Las acciones realizadas son obligatorias.';
+      if (!formData.acciones_realizadas) {
+        errors.acciones_realizadas = 'Las acciones realizadas son obligatorias.';
         esValido = false;
       }
 
@@ -56,15 +80,35 @@ export default {
         esValido = false;
       }
 
-      if (!formData.conclusiones) {
-        errors.conclusiones = 'Las conclusiones son obligatorias.';
+      if (!formData.observaciones) {
+        errors.observaciones = 'Las conclusiones son obligatorias.';
         esValido = false;
       }
 
       return esValido;
     };
 
-    const generarOrden = (event) => {
+
+    const llenado_de_orden = () => {
+      let resto = null;
+      const url = `http://localhost:3000/api/orden_servicio/${id.value}`;
+      axios.get(url)
+      .then(response => {
+        if(response.data != null){
+          resto = response.data.monto_total - response.data.anticipo;
+          numeroOrden.value = response.data.id_orden_servicio;
+          formData.nombre_Cliente = response.data.nombre_Cliente;
+          formData.presupuesto = response.data.presupuesto;
+          formData.anticipo = `Anticipo: $`+response.data.anticipo;
+          formData.restante = `Restante: $`+resto;
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    };
+
+    const finalizar_orden = (event) => {
       event.preventDefault();
       if (!validarFormulario()) {
         showNotification.value = true;
@@ -74,45 +118,72 @@ export default {
         return;
       }
 
-      // Lógica para generar la orden de servicio
-      console.log('Orden generada:', formData);
+      actulizacion_orden();
+      
     };
 
-    return { formData, errors, showNotification, generarOrden };
+    const actulizacion_orden = () =>{
+      form_orden.id_orden_servicio = parseInt(id.value);
+      form_orden.acciones_realizadas = formData.acciones_realizadas;
+      form_orden.recomendaciones = formData.recomendaciones;
+      form_orden.observaciones = formData.observaciones;
+      const url = "http://localhost:3000/api/orden_servicio";
+      console.log(form_orden);
+      axios.put(url, form_orden)
+      .then(response => {
+        if(response.data != null){
+          console.log(response.data);
+          alert("orden de servicio terminada")
+          router.push('/home');
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    };
+
+    onMounted(() => {
+      get_session_time(sessionTimeout, router);
+      llenado_de_orden();
+    })
+
+
+
+    return { formData, form_orden, errors, showNotification, finalizar_orden, numeroOrden };
   }
-};
+});
 </script>
 
 <template>
-    <div class="container_c">
-        <div class="container_nav">
-            <h6 id="h_No">No. de Orden #</h6>
+  <div class="container_nav">
+            <h6 id="h_No">No. de Orden:{{ numeroOrden }}</h6>
             <h6 id="h_titulo">Cierre de Orden de Servicio</h6>
         </div>
+    <div class="container_c">
         <div class="form_principal">
             <form class="form_orden" @submit="generarOrden">
                 <div class="container_left">
                     <ul class="ul_left">
                         <li class="li_left">
-                            <input type="text" class="input_text_line" placeholder="Nombre del Cliente" v-model="formData.nombreCliente"/>
-                            <span class="error-message" v-if="errors.nombreCliente">{{ errors.nombreCliente }}</span>
+                            <input type="text" class="input_text_line" disabled v-model="formData.nombre_Cliente"/>
+                            <span class="error-message" v-if="errors.nombre_Cliente">{{ errors.nombre_Cliente }}</span>
                         </li>
                         <li class="li_left">
-                            <input type="text" class="input_text_line" placeholder="Servicio Brindado" v-model="formData.servicioBrindado"/>
-                            <span class="error-message" v-if="errors.servicioBrindado">{{ errors.servicioBrindado }}</span>
+                            <input type="text" class="input_text_line" disabled v-model="formData.presupuesto"/>
+                            <span class="error-message" v-if="errors.presupuesto">{{ errors.presupuesto }}</span>
                         </li>
                         <li class="li_left">
-                            <input type="text" class="input_text_line" placeholder="Anticipo" v-model="formData.anticipo"/>
+                            <input type="text" class="input_text_line" disabled v-model="formData.anticipo"/>
                             <span class="error-message" v-if="errors.anticipo">{{ errors.anticipo }}</span>
                         </li>
                         <li class="li_left">
-                            <input type="text" class="input_text_line" placeholder="Restante" v-model="formData.restante"/>
+                            <input type="text" class="input_text_line" disabled v-model="formData.restante"/>
                             <span class="error-message" v-if="errors.restante">{{ errors.restante }}</span>
                         </li>
                         <li class="li_left">
                             <h6 class="h_left">Acciones realizadas en el servicio</h6>
-                            <textarea class="input_text" v-model="formData.acciones"></textarea>
-                            <span class="error-message" v-if="errors.acciones">{{ errors.acciones }}</span>
+                            <textarea class="input_text" v-model="formData.acciones_realizadas"></textarea>
+                            <span class="error-message" v-if="errors.acciones_realizadas">{{ errors.acciones_realizadas }}</span>
                         </li>
                         <li class="li_left">
                             <h6 class="h_left">Recomendaciones</h6>
@@ -121,22 +192,19 @@ export default {
                         </li>
                     </ul>
                 </div>
-                <div class="container_right">
                     <ul class="ul_right">
                         <li class="conclusiones">
                             <h6>Conclusiones del Servicio</h6>
-                            <textarea class="input_text" v-model="formData.conclusiones"></textarea>
-                            <span class="error-message" v-if="errors.conclusiones">{{ errors.conclusiones }}</span>
+                            <textarea class="input_text" v-model="formData.observaciones"></textarea>
+                            <span class="error-message" v-if="errors.observaciones">{{ errors.observaciones }}</span>
                         </li>
-                        <li class="button">
-                            <button id="btn_orden" type="submit">Generar Orden</button>
-                        </li>
+                        <div class="button">
+                            <button id="btn_orden" type="submit" v-on:click="finalizar_orden">Finalizar Orden</button>
+                        </div>
                     </ul>
-                </div>
             </form>
         </div>
     </div>
-
     <transition name="fade">
         <div v-if="showNotification" class="notification">
             <i class="fas fa-exclamation-circle"></i>
