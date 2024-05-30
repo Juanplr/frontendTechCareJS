@@ -28,7 +28,7 @@ export default {
           if (response.data == false) {
             console.log("Error");
           } else {
-            console.log("Welcome");
+            localStorage.setItem("token", response.data.token);
             router.push("/home");
           }
         })

@@ -1,14 +1,18 @@
 <script>
-import { ref, onMounted } from "vue";
-import { reactive } from "vue";
+import { ref, onMounted} from "vue";
+import { reactive } from 'vue';
 import axios from "axios";
-import { useRouter } from "vue-router";
+import {useRouter } from 'vue-router';
+import {sessionTimeout} from "@/const/constantes.js";
+import {get_session_time} from "@/Funtionsjs/funtions.js";
 import Chat from '@/components/Chat.vue'
+
 
 export default {
   components: {
     Chat
   },setup() {
+    const url = "http://localhost:3000/api/orden_servicio/";
     const router = useRouter();
     const id_orden_de_servicio_find = ref("");
     const formData = reactive({
@@ -20,21 +24,43 @@ export default {
       console.log('Formulario enviado', formData.id_orden_de_servicio);
       router.push('/formularioOrden'); 
     };
-
-    const go_to_cierre_orden = () => {
+    const go_to_cierre_orden = async () =>{
       const id = parseInt(id_orden_de_servicio_find.value);
-      if (!id_orden_de_servicio_find.value || isNaN(id) || id < 1) {
+     
+      if (!id_orden_de_servicio_find.value || isNaN(id) || id<1){
+        alert("por favor ingrese una orden de servicio valido")
+      } else{
+        try {
+      const existe = await peticion_orden_existe(id);
+      if (existe) {
+        router.push(`/cierreOrden/${id}`);
+      } else {
         alert("Por favor ingrese una orden de servicio válida");
-        return;
       }
-      router.push('/cierreOrden');
-    };
+    } catch (error) {
+      console.error('Error verificando la orden de servicio:', error);
+      alert("Ocurrió un error al verificar la orden de servicio");
+    }
+       
+      }
+        
+    }
 
-    const toggleChat = () => {
-      isChatVisible.value = !isChatVisible.value;
-    };
+    const peticion_orden_existe = async (id) => {
+  try {
+    const response = await axios.get(`${url}existe/${id}`);
+    return response.data !== false;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+};
+    
+    onMounted(() => {
+      get_session_time(sessionTimeout, router);
+    })
 
-    return { go_to_Formulario_orden, go_to_cierre_orden, formData, id_orden_de_servicio_find, toggleChat, isChatVisible};
+    return { go_to_Formulario_orden, go_to_cierre_orden, formData, id_orden_de_servicio_find, peticion_orden_existe,  toggleChat, isChatVisible };
   }
 };
 
@@ -59,14 +85,6 @@ export default {
         <p>Hola, ¿en qué puedo ayudarte?</p>
       </div>
     </div>
-
-
-    <transition name="fade">
-      <div v-if="notificationVisible" class="notification">
-        <i class="fas fa-exclamation-circle"></i>
-        Por favor, ingrese el ID de la orden de servicio.
-      </div>
-    </transition>
   </div>
 </template>
 

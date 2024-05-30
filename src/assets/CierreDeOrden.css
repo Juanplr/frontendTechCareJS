@@ -1,16 +1,21 @@
 .container_c {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-family: Arial, sans-serif;
+  display: grid;
+  grid-template-columns: 1fr; 
+  gap: 10%; /* Espacio entre las columnas */
+  justify-content: center; /* Centramos las columnas */
+  margin-top: 60px;
+  width: 40vw;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .container_nav {
-    background-color: #010326;
-    display: flex;
-    width: 100%;
-    padding: 10px 0;
-    color: white;
+  padding: 2%;
+  text-align: center;
+  background-color: rgb(5, 19, 40);
+  color: #fff;
+  font-weight: bold;
+  font-size:x-large;
 }
 
 #h_No {
@@ -22,21 +27,9 @@
 }
 
 .form_principal {
-    width: 80%;
-    margin-top: 20px;
-}
-
-.form_orden {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-}
-
-.container_left,
-.container_right {
-    flex: 1;
-    margin: 0 10px;
-    margin-left: 5%;
+  display: grid;
+  width: 100%; 
+  row-gap: 30px;
 }
 
 .ul_left {
