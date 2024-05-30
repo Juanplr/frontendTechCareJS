@@ -1,95 +1,110 @@
 /* Home.css */
 
 .fund {
-    background-color: #ccc;
+  background-color: #ccc;
 
 }
 
 .header {
-    background-color: #010326;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 12px;
-    /* Espacio entre los elementos */
-    padding: 15px;
-    /* Opcional: Espacio alrededor del contenedor */
-    height: 65px;
+  background-color: #010326;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  /* Espacio entre los elementos */
+  padding: 15px;
+  /* Opcional: Espacio alrededor del contenedor */
+  height: 65px;
 }
 
 .id {
-    font-size: 20px;
-    font-family: 'Raleway', sans-serif;
-    font-weight: bold;
-    color: black;
-    height: 35px;
-    width: 255px;
-    border: none;
-    border-radius: 1%;
+  font-size: 20px;
+  font-family: 'Raleway', sans-serif;
+  font-weight: bold;
+  color: black;
+  height: 35px;
+  width: 255px;
+  border: none;
+  border-radius: 1%;
 }
 
 
 .search {
 
-    float: right;
-    background-color: #9C8BCD;
-    font-family: 'Raleway', sans-serif; /* Agrega comillas al nombre de la fuente */
-    color: #fff; /* Usa código hexadecimal para el color de texto */
-    font-size: 15px;
-    width: 155px;
-    border-radius: 8px; /* Ajusta el radio del borde para hacerlo semicircular */
-    border: none; /* Elimina el borde */
-    padding: 2px;
-    cursor: pointer;
+  float: right;
+  background-color: #9C8BCD;
+  font-family: 'Raleway', sans-serif;
+  /* Agrega comillas al nombre de la fuente */
+  color: #fff;
+  /* Usa código hexadecimal para el color de texto */
+  font-size: 15px;
+  width: 155px;
+  border-radius: 8px;
+  /* Ajusta el radio del borde para hacerlo semicircular */
+  border: none;
+  /* Elimina el borde */
+  padding: 2px;
+  cursor: pointer;
 }
 
 
 .container_image {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    position: relative;
-    width: 100vw;
-    height: 80vh;
-    opacity: 0.2;
-  }
-  
-  .image_logo {
-    max-width: 125%;
-    max-height: 125%;
-    object-fit: contain;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  width: 100vw;
+  height: 80vh;
+  opacity: 0.2;
+}
+
+.image_logo {
+  max-width: 125%;
+  max-height: 125%;
+  object-fit: contain;
+}
 
 
 .chat_container {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    animation: bounceBubble 0.5s infinite alternate;
-  }
-  
-  @keyframes bounceBubble {
-    0% {
-      transform: translateY(0);
-    }
-    100% {
-      transform: translateY(-10px);
-    }
-  }
-  
-  .chat_bubble {
-    background-color: #DCF8C6;
-    color: black;
-    padding: 10px;
-    border-radius: 20px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-    max-width: 250px;
-    text-align: center;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  animation: bounceBubble 0.5s infinite alternate;
+}
+
+@keyframes bounceBubble {
+  0% {
+    transform: translateY(0);
   }
 
+  100% {
+    transform: translateY(-10px);
+  }
+}
 
-  
+.chat_bubble {
+  background-color: #DCF8C6;
+  color: black;
+  padding: 10px;
+  border-radius: 20px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  max-width: 250px;
+  text-align: center;
+}
+
+.chat_contenedor {
+  position: fixed;
+  bottom: 200px;
+  right: 50px;
+}
+
+.chat_container :hover {
+  cursor: pointer;
+}
+
+
+
 .error-message {
   color: red;
   font-size: 14px;
@@ -118,24 +133,31 @@
   font-size: 24px;
 }
 
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
   transition: opacity 0.5s;
 }
 
-.fade-enter, .fade-leave-to {
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
 
 @keyframes shake {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translate(-50%, -50%);
   }
+
   25% {
     transform: translate(-48%, -50%);
   }
+
   50% {
     transform: translate(-52%, -50%);
   }
+
   75% {
     transform: translate(-48%, -50%);
   }
