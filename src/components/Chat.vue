@@ -5,6 +5,7 @@
       class="txt-username"
       type="text"
       placeholder="username"
+      disabled
     />
 
     <div class="div-chat">
@@ -37,11 +38,13 @@ import io from "socket.io-client";
 
 const socket = io("http://localhost:3000/");
 
+socket.emit('setRole', localStorage.getItem("roll")); 
+
 export default {
   name: 'Chat',
   setup() {
     const message = ref("");
-    const username = ref("");
+    const username = ref(localStorage.getItem("nombre"));
     const listMessages = ref([
       { body: "Bienvenido al Chat", user: username },
     ]);
@@ -94,6 +97,7 @@ export default {
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  
 }
 
 .div-chat {

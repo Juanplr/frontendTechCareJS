@@ -1,6 +1,5 @@
 <script>
-// En App.vue
-import { ref } from "vue";
+import { ref, onMounted, ErrorCodes } from "vue";
 import axios from "axios";
 import {useRouter} from 'vue-router';
 import { reactive } from 'vue';
@@ -14,30 +13,74 @@ export default {
       contrasena: ''
     });
     
-    
+    const isVisibleContrasena = ref(true);
+    const isVisibleUsuario = ref(true);
+    const textContrasena = ref("");
+    const textUsuario = ref("");
+
     const login = () => {
       const sesion = {
         "nombre": formData.nombre,
         "contrasena": formData.contrasena
       }
-
-      axios
+      if(sesion.nombre && sesion.contrasena){
+        axios
         .post(`${URL}user/loging`, sesion 
         )
         .then((response) => {
           if (response.data == false) {
             console.log("Error");
           } else {
+            console.log(response.data)
             localStorage.setItem("token", response.data.token);
+            localStorage.setItem("nombre", response.data.user.nombre);
+            localStorage.setItem("roll", response.data.user.roll);
             router.push("/home");
           }
         })
         .catch((error) => {
           console.error(error);
+          if(error.message == "Request failed with status code 400"){
+            isVisibleContrasena.value = true;
+            textContrasena.value = "La contraseña deben ser 8 caracteres"
+            isVisibleUsuario.value = false;
+          }
+          if(error.message == "Request failed with status code 404"){
+            isVisibleContrasena.value = true;
+            textContrasena.value = "Usuario o Contraseña Incorrectos"
+            isVisibleUsuario.value = true;
+            textUsuario.value = "Usuario o Contraseña Incorrectos"
+          }
         });
+      }else{
+       if(!sesion.nombre && !sesion.contrasena){
+        isVisibleUsuario.value = true;
+        textUsuario.value = "Favor de agregar el Username";
+        isVisibleContrasena.value = true;
+        textContrasena.value = "Favor de agregar la Contraseña";
+       }else{
+        if(!sesion.nombre){
+          isVisibleUsuario.value = true;
+          textUsuario.value = "Favor de agregar el Username";
+          isVisibleContrasena.value = false;
+        }
+        if(!sesion.contrasena){
+          isVisibleContrasena.value = true;;
+          textContrasena.value = "Favor de agregar la Contraseña";
+          isVisibleUsuario.value = false;
+        }
+       }
+      }
     };
+    onMounted(() => {
+      if (localStorage.getItem("token")) {
+        router.push("/home");
+      }else{
+        router.push("/");
+      }
+    })
 
-    return { formData, login };
+    return { formData, login, isVisibleContrasena, isVisibleUsuario, textContrasena,textUsuario };
   },
 };
 </script>
@@ -55,7 +98,7 @@ export default {
               placeholder="Username"
               v-model="formData.nombre"/>
           <div class="login__label">
-            <label>Nombre de usuario o contraseña incorrectos</label>
+            <label class="label_text" v-if="isVisibleUsuario" v-text="textUsuario"></label>
           </div>
           </div>
           <div class="login__field">
@@ -67,7 +110,7 @@ export default {
               v-model="formData.contrasena"
             />
             <div class="login__label">
-            <label>Nombre de usuario o contraseña incorrectos</label>
+            <label class="label_text" v-if="isVisibleContrasena" v-text="textContrasena"></label>
           </div>
           </div>
           <button
