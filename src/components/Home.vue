@@ -1,11 +1,10 @@
 <script>
-import { ref, onMounted} from "vue";
-import { reactive } from 'vue';
+import { get_session_time } from "@/Funtionsjs/funtions.js";
+import Chat from '@/components/Chat.vue';
+import { sessionTimeout } from "@/const/constantes.js";
 import axios from "axios";
-import {useRouter } from 'vue-router';
-import {sessionTimeout} from "@/const/constantes.js";
-import {get_session_time} from "@/Funtionsjs/funtions.js";
-import Chat from '@/components/Chat.vue'
+import { onMounted, reactive, ref } from "vue";
+import { useRouter } from 'vue-router';
 
 
 export default {
@@ -80,6 +79,27 @@ export default {
     </div>
     <div class="container_image">
       <img class="image_logo" src="/Techcare_Claro.jpeg"/>
+      <div class="table_container">
+        <table>
+          <thead>
+            <tr>
+              <th>Numero de servicio</th>
+              <th>Tipo de equipo</th>
+              <th>Marca</th>
+              <th>Nombre del Cliente</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Aquí puedes iterar sobre tu lista de ordenes de servicio y mostrar los datos -->
+            <tr v-for="(orden, index) in ordenesDeServicio" :key="index">
+              <td>{{ orden.id_orden_de_servicio }}</td>
+              <td>{{ orden.tipo_equipo }}</td>
+              <td>{{ orden.marca }}</td>
+              <td>{{ orden.nombre_cliente }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
     <div class="chat_contenedor" v-if="isChatVisible">
       <Chat/>
