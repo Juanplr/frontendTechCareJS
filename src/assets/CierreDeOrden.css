@@ -9,21 +9,13 @@
   margin-right: auto;
 }
 
-.container_nav {
+#container_nav {
   padding: 2%;
   text-align: center;
   background-color: rgb(5, 19, 40);
   color: #fff;
   font-weight: bold;
   font-size:x-large;
-}
-
-#h_No {
-    padding-left: 2%;
-}
-
-#h_titulo {
-    margin: auto;
 }
 
 .form_principal {
@@ -56,13 +48,15 @@
     margin-bottom: 15px;
 }
 
+
 .input_text_line {
     width: 100%;
     padding: 10px;
     font-size: 14px;
     border: 1px underline #ccc;
     border-radius: 4px;
-}
+} 
+
 
 .input_text_line:focus {
     border-color: #9C8BCD;
@@ -80,20 +74,20 @@
 }
 
 #btn_orden {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #9C8BCD;
-    color: rgb(255, 255, 255);
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  background: #e2faf4;
+	font-size: 14px;
+	margin-top: 30px;
+	padding: 16px 20px;
+	border-radius: 20px;
+	border: 1px solid #7572af;
+	text-transform: uppercase;
+	font-weight: 700;	
+	width: 100%;
+	color: #4C489D;
+	box-shadow: 0px 2px 2px #5C5696;
+	cursor: pointer;
+	transition: .2s;
 }
-
-#btn_orden:hover {
-    background-color: #6a5acd;
-}
-
 
 
 .error-message {

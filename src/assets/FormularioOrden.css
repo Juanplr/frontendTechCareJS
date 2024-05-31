@@ -73,7 +73,6 @@ button {
   display: grid;
   width: 100%; 
   row-gap: 30px;
-  
 }
 
 .btn_generar_orden{

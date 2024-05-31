@@ -6,7 +6,6 @@ import axios from "axios";
 import { onMounted, reactive, ref } from "vue";
 import { useRouter } from 'vue-router';
 
-
 export default {
   components: {
     Chat
