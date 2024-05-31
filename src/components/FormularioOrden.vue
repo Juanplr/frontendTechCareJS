@@ -1,11 +1,9 @@
 <script>
-import { getFechaActual } from "@/Funtionsjs/funtions";
+import { getFechaActual, get_session_time } from "@/Funtionsjs/funtions";
+import { sessionTimeout, url } from "@/const/constantes";
 import axios from "axios";
-import { reactive, ref, onMounted} from 'vue';
-import {useRouter} from 'vue-router';
-import {url} from "@/const/constantes";
-import {sessionTimeout} from "@/const/constantes";
-import {get_session_time} from "@/Funtionsjs/funtions";
+import { onMounted, reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default {
   setup() {
@@ -29,6 +27,7 @@ export default {
 
     const validarFormulario = () => {
       let esValido = true;
+      errors.tipo_de_dispositivo  ="";
       errors.numero_de_serie = '';
       errors.marca = '';
       errors.modelo = '';
@@ -37,6 +36,11 @@ export default {
       errors.nombre_cliente = '';
       errors.monto_total = '';
       errors.anticipo = '';
+
+      if (!formData.tipo_de_dispositivo) {
+        errors.tipo_de_dispositivo = 'Por favor seleccione un tipo de equipo.';
+        esValido = false;
+      }
 
       if (!formData.numero_de_serie) {
         errors.numero_de_serie = 'El número de serie es obligatorio.';
@@ -158,6 +162,7 @@ export default {
             <option value="laptop">Laptop</option>
             <option value="consola">Consola</option>
           </select>
+          <span class="error-message" v-if="errors.tipo_de_dispositivo">{{ errors.tipo_de_dispositivo }}</span>
         </form>
       </div>
       <input type="text" placeholder="Numero de serie" v-model="formData.numero_de_serie"/>
