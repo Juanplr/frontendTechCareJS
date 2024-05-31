@@ -15,6 +15,9 @@
   padding: 15px;
   /* Opcional: Espacio alrededor del contenedor */
   height: 65px;
+  .logout {
+    margin-right: auto; /* Asegura que el botón de logout esté alineado a la izquierda */
+  }
 }
 
 .id {
@@ -29,7 +32,7 @@
 }
 
 
-.search {
+.search, .logout_button {
 
   float: right;
   background-color: #9C8BCD;
@@ -68,40 +71,36 @@
 
 .table_container {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 50%;
-  height: 20%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
+  width: 60%; 
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: auto;
-  padding-left: 60px; /* Margen adicional para mover un poco más a la derecha */
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  background: rgba(255, 255, 255, 0.8); /* Fondo blanco con transparencia */
+  background: rgba(255, 255, 255, 0.8);
   border-radius: 8px;
   overflow: hidden;
 }
 
-/* Estilo para las celdas de la tabla */
 th, td {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
 }
 
-/* Estilo para las filas impares */
 tr:nth-child(odd) {
   background-color: #f2f2f2;
 }
 
-/* Estilo para el encabezado de la tabla */
 th {
-  background-color:#9C8BCD;
+  background-color: #9C8BCD;
   color: white;
 }
 

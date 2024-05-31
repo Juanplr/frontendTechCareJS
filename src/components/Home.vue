@@ -16,12 +16,15 @@ export default {
     const formData = reactive({
       id_orden_de_servicio: ""
     });
+
     const isChatVisible = ref(false);
+    const ordenes_activas = ref([]);
 
     const go_to_Formulario_orden = () => {
       console.log('Formulario enviado', formData.id_orden_de_servicio);
       router.push('/formularioOrden'); 
     };
+
     const go_to_cierre_orden = async () =>{
       const id = parseInt(id_orden_de_servicio_find.value);
      
@@ -44,6 +47,17 @@ export default {
         
     }
 
+    const tabla_ordenes_activas=async()=>{
+      try {
+        const response = await axios.get(url);
+        console.log(response.data);
+        ordenes_activas.value = response.data;  // Actualiza el estado con los datos de la respuesta
+      } catch (error) {
+        console.error('Error obteniendo las órdenes de servicio:', error);
+      }
+      
+    };
+
     const peticion_orden_existe = async (id) => {
   try {
     const response = await axios.get(`${url}existe/${id}`);
@@ -52,9 +66,15 @@ export default {
     console.error(error);
     return false;
   }
-};
+  };
+
+    const logout = () => { 
+      localStorage.clear();
+      router.push('/');
+    };
     
     onMounted(() => {
+      tabla_ordenes_activas();
       get_session_time(sessionTimeout, router);
     })
     
@@ -62,16 +82,19 @@ export default {
       isChatVisible.value = !isChatVisible.value;
     };
 
-    return { go_to_Formulario_orden, go_to_cierre_orden, formData, id_orden_de_servicio_find, peticion_orden_existe,  toggleChat, isChatVisible };
+    return { go_to_Formulario_orden, go_to_cierre_orden, formData, id_orden_de_servicio_find, peticion_orden_existe, 
+       toggleChat, isChatVisible, logout, tabla_ordenes_activas, ordenes_activas };
   }
 };
 
 </script>
 
-
 <template>
   <div>
     <div class="header">
+      <div class="logout">
+        <button class ="logout_button" v-on:click="logout()">Cerrar sesion</button>
+      </div>
       <button class="search" v-on:click="go_to_cierre_orden()">Buscar Orden de Servicio</button>
       <input class="id" type="text" v-model="id_orden_de_servicio_find" />
       <button type="button"class="search" v-on:click="go_to_Formulario_orden()">Nueva Orden de Servicio</button>
@@ -83,18 +106,17 @@ export default {
           <thead>
             <tr>
               <th>Numero de servicio</th>
-              <th>Tipo de equipo</th>
-              <th>Marca</th>
-              <th>Nombre del Cliente</th>
+              <th>Nombre del clinete</th>
+              <th>Fecha de ingreso</th>
+              <th>Presupuesto</th>
             </tr>
           </thead>
           <tbody>
-            <!-- Aquí puedes iterar sobre tu lista de ordenes de servicio y mostrar los datos -->
-            <tr v-for="(orden, index) in ordenesDeServicio" :key="index">
-              <td>{{ orden.id_orden_de_servicio }}</td>
-              <td>{{ orden.tipo_equipo }}</td>
-              <td>{{ orden.marca }}</td>
-              <td>{{ orden.nombre_cliente }}</td>
+            <tr v-for="(orden, index) in ordenes_activas" :key="index">
+              <td>{{ orden.id_orden_servicio }}</td>
+              <td>{{ orden.nombre_Cliente }}</td>
+              <td>{{ orden.fecha_de_ingreso }}</td>
+              <td>{{ orden.presupuesto }}</td>
             </tr>
           </tbody>
         </table>
